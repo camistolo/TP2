@@ -82,6 +82,7 @@
 
 
 #define TICKRATE_1MS	(1)				/* 1000 ticks per second */
+#define TICKRATE_50MS	(50)				/* 1000 ticks per second */
 #define TICKRATE_MS		(TICKRATE_1MS)	/* 1000 ticks per second */
 
 /*==================[internal data declaration]==============================*/
@@ -93,8 +94,8 @@ static Prefix statechart;
 
 
 /* Select a TimeEvents choise	*/
-#define __USE_TIME_EVENTS (false)	/* "false" without TimeEvents */
-//#define __USE_TIME_EVENTS (true)	/* or "true" with TimerEvents */
+/*#define __USE_TIME_EVENTS (false)	/* "false" without TimeEvents */
+#define __USE_TIME_EVENTS (true)	/* or "true" with TimerEvents */
 
 /*! This is a timed state machine that requires timer services */
 #if (__USE_TIME_EVENTS == true)
@@ -224,7 +225,7 @@ int main(void)
 
 		if (SysTick_Time_Flag == true) {
 			SysTick_Time_Flag = false;
-			delay (1000);
+			/*delay (1000);*/
 			#if (__USE_TIME_EVENTS == true)
 			UpdateTimers(ticks, NOF_TIMERS);
 			for (i = 0; i < NOF_TIMERS; i++) {
