@@ -41,7 +41,7 @@
 /*==================[inclusions]=============================================*/
 
 #include "main.h"
-#include "sapi.h"       // <= sAPI header
+#include "board.h"
 
 /* Include statechart header file. Be sure you run the statechart C code
  * generation tool!
@@ -77,13 +77,18 @@
  	 	 	 	 	 	rm prefix.sct
  	 	 	 	 	 	cp Porton.-sct prefix.sct 							 		*/
 
+#define SCT_4 (4)	/* Test Statechart EDU-CIAA-NXP - IDE LPCXpresso - Generador_senales
+						#define __USE_TIME_EVENTS (false)
+ 	 	 	 	 	 	rm prefix.sct
+ 	 	 	 	 	 	cp Generador_senales.-sct prefix.sct 							 		*/
+
+#define SCT_5 (5)	/* Test Statechart EDU-CIAA-NXP - IDE LPCXpresso - Generador_senales
+						#define __USE_TIME_EVENTS (false)
+ 	 	 	 	 	 	rm prefix.sct
+ 	 	 	 	 	 	cp Generador_senales.-sct prefix.sct 							 		*/
+
 /* Select a compilation choise	*/
-#define TEST (SCT_1)
-
-
-#define TICKRATE_1MS	(1)				/* 1000 ticks per second */
-#define TICKRATE_50MS	(50)				/* 1000 ticks per second */
-#define TICKRATE_MS		(TICKRATE_1MS)	/* 1000 ticks per second */
+#define TEST (SCT_5)
 
 /*==================[internal data declaration]==============================*/
 
@@ -109,11 +114,24 @@ TimerTicks ticks[NOF_TIMERS];
 
 /*==================[internal functions declaration]=========================*/
 
+/** @brief hardware initialization function
+ *	@return none
+ */
+static void initHardware(void);
+
 /*==================[internal data definition]===============================*/
 
 /*==================[external data definition]===============================*/
 
 /*==================[internal functions definition]==========================*/
+
+/** clock and peripherals initialization */
+static void initHardware(void)
+{
+	Board_Init();
+	SystemCoreClockUpdate();
+	SysTick_Config(SystemCoreClock / 1000);
+}
 
 /*==================[external functions definition]==========================*/
 
@@ -142,7 +160,7 @@ There are some constraints that have to be considered for the implementation of 
  */
 void prefixIface_opLED(Prefix* handle, sc_integer LEDNumber, sc_boolean State)
 {
-	gpioWrite( (LEDR + LEDNumber), State);
+	Board_LED_Set((uint8_t) LEDNumber, State);
 }
 
 
@@ -176,10 +194,11 @@ void prefix_unsetTimer(Prefix* handle, const sc_eventid evid)
 
 
 /**
- * @brief	Hook on Handle interrupt from SysTick timer
+ * @brief	Handle interrupt from SysTick timer
  * @return	Nothing
  */
-void myTickHook( void *ptr ){
+void SysTick_Handler(void)
+{
 	SysTick_Time_Flag = true;
 }
 
@@ -203,13 +222,7 @@ int main(void)
 	#endif
 
 	/* Generic Initialization */
-	boardConfig();
-
-	/* Init Ticks counter => TICKRATE_MS */
-	tickConfig( TICKRATE_MS );
-
-	/* Add Tick Hook */
-	tickCallbackSet( myTickHook, (void*)NULL );
+	initHardware();
 
 	/* Statechart Initialization */
 	#if (__USE_TIME_EVENTS == true)
@@ -225,7 +238,7 @@ int main(void)
 
 		if (SysTick_Time_Flag == true) {
 			SysTick_Time_Flag = false;
-			/*delay (1000);*/
+
 			#if (__USE_TIME_EVENTS == true)
 			UpdateTimers(ticks, NOF_TIMERS);
 			for (i = 0; i < NOF_TIMERS; i++) {
@@ -254,18 +267,7 @@ int main(void)
 						#define __USE_TIME_EVENTS (true)
  	 	 	 	 	 	rm prefix.sct
  	 	 	 	 	 	cp Button.-sct prefix.sct 							 */
-
-
-uint32_t Buttons_GetStatus_(void) {
-	uint8_t ret = false;
-
-	if (gpioRead( TEC1 ) == 0)
-		ret = true;
-
-	return ret;
-}
-
- /**
+/**
  * @brief	main routine for statechart example
  * @return	Function should not exit.
  */
@@ -278,13 +280,7 @@ int main(void)
 	uint32_t BUTTON_Status;
 
 	/* Generic Initialization */
-	boardConfig();
-
-	/* Init Ticks counter => TICKRATE_MS */
-	tickConfig( TICKRATE_MS );
-
-	/* Add Tick Hook */
-	tickCallbackSet( myTickHook, (void*)NULL );
+	initHardware();
 
 	/* Statechart Initialization */
 	#if (__USE_TIME_EVENTS == true)
@@ -314,7 +310,7 @@ int main(void)
 			prefixIface_raise_evTick(&statechart);					// Event -> evTick => OK
 			#endif
 
-		    BUTTON_Status = Buttons_GetStatus_();
+			BUTTON_Status = Buttons_GetStatus();
 			if (BUTTON_Status != 0)
 				prefixIface_raise_evTECXOprimido(&statechart);		// Event -> evTECXOprimodo => OK
 			else
@@ -336,18 +332,6 @@ int main(void)
  	 	 	 	 	 	rm prefix.sct
  	 	 	 	 	 	cp Porton.-sct prefix.sct 							 		*/
 
-
-uint32_t Buttons_GetStatus_(void) {
-	uint8_t ret = false;
-	uint32_t idx;
-
-	for (idx = 0; idx < 4; ++idx) {
-		if (gpioRead( TEC1 + idx ) == 0)
-			ret |= 1 << idx;
-	}
-	return ret;
-}
-
 /**
  * @brief	main routine for statechart example
  * @return	Function should not exit.
@@ -361,13 +345,7 @@ int main(void)
 	uint32_t BUTTON_Status;
 
 	/* Generic Initialization */
-	boardConfig();
-
-	/* Init Ticks counter => TICKRATE_MS */
-	tickConfig( TICKRATE_MS );
-
-	/* Add Tick Hook */
-	tickCallbackSet( myTickHook, (void*)NULL );
+	initHardware();
 
 	/* Statechart Initialization */
 	#if (__USE_TIME_EVENTS == true)
@@ -397,7 +375,130 @@ int main(void)
 			prefixIface_raise_evTick(&statechart);					// Event -> evTick => OK
 			#endif
 
-			BUTTON_Status = Buttons_GetStatus_();
+			BUTTON_Status = Buttons_GetStatus();
+			if (BUTTON_Status != 0)									// Event -> evTECXOprimodo => OK
+				prefixIface_raise_evTECXOprimido(&statechart, BUTTON_Status);	// Value -> Tecla
+			else													// Event -> evTECXNoOprimido => OK
+				prefixIface_raise_evTECXNoOprimido(&statechart);
+
+			prefix_runCycle(&statechart);							// Run Cycle of Statechart
+		}
+	}
+}
+#endif
+
+#if (TEST == SCT_4)	/* Test Statechart EDU-CIAA-NXP - IDE LPCXpresso - Application
+						#define __USE_TIME_EVENTS (true)
+ 	 	 	 	 	 	rm prefix.sct
+ 	 	 	 	 	 	cp Application.-sct prefix.sct 								*/
+					/* Test Statechart EDU-CIAA-NXP - IDE LPCXpresso - Portón
+						#define __USE_TIME_EVENTS (true)
+ 	 	 	 	 	 	rm prefix.sct
+ 	 	 	 	 	 	cp Porton.-sct prefix.sct 							 		*/
+
+/**
+ * @brief	main routine for statechart example
+ * @return	Function should not exit.
+ */
+int main(void)
+{
+	#if (__USE_TIME_EVENTS == true)
+	uint32_t i;
+	#endif
+
+	uint32_t BUTTON_Status;
+
+	/* Generic Initialization */
+	initHardware();
+
+	/* Statechart Initialization */
+	#if (__USE_TIME_EVENTS == true)
+	InitTimerTicks(ticks, NOF_TIMERS);
+	#endif
+
+	prefix_init(&statechart);
+	prefix_enter(&statechart);
+
+	/* LEDs toggle in main */
+	while (1) {
+		__WFI();
+
+		if (SysTick_Time_Flag == true) {
+			SysTick_Time_Flag = false;
+
+			#if (__USE_TIME_EVENTS == true)
+			UpdateTimers(ticks, NOF_TIMERS);
+			for (i = 0; i < NOF_TIMERS; i++) {
+				if (IsPendEvent(ticks, NOF_TIMERS, ticks[i].evid) == true) {
+
+					prefix_raiseTimeEvent(&statechart, ticks[i].evid);	// Event -> Ticks.evid => OK
+					MarkAsAttEvent(ticks, NOF_TIMERS, ticks[i].evid);
+				}
+			}
+			#else
+			prefixIface_raise_evTick(&statechart);					// Event -> evTick => OK
+			#endif
+
+
+			prefix_runCycle(&statechart);							// Run Cycle of Statechart
+		}
+	}
+}
+#endif
+
+#if (TEST == SCT_5)	/* Test Statechart EDU-CIAA-NXP - IDE LPCXpresso - Application
+						#define __USE_TIME_EVENTS (true)
+ 	 	 	 	 	 	rm prefix.sct
+ 	 	 	 	 	 	cp Application.-sct prefix.sct 								*/
+					/* Test Statechart EDU-CIAA-NXP - IDE LPCXpresso - Portón
+						#define __USE_TIME_EVENTS (true)
+ 	 	 	 	 	 	rm prefix.sct
+ 	 	 	 	 	 	cp Porton.-sct prefix.sct 							 		*/
+
+/**
+ * @brief	main routine for statechart example
+ * @return	Function should not exit.
+ */
+int main(void)
+{
+	#if (__USE_TIME_EVENTS == true)
+	uint32_t i;
+	#endif
+
+	uint32_t BUTTON_Status;
+
+	/* Generic Initialization */
+	initHardware();
+
+	/* Statechart Initialization */
+	#if (__USE_TIME_EVENTS == true)
+	InitTimerTicks(ticks, NOF_TIMERS);
+	#endif
+
+	prefix_init(&statechart);
+	prefix_enter(&statechart);
+
+	/* LEDs toggle in main */
+	while (1) {
+		__WFI();
+
+		if (SysTick_Time_Flag == true) {
+			SysTick_Time_Flag = false;
+
+			#if (__USE_TIME_EVENTS == true)
+			UpdateTimers(ticks, NOF_TIMERS);
+			for (i = 0; i < NOF_TIMERS; i++) {
+				if (IsPendEvent(ticks, NOF_TIMERS, ticks[i].evid) == true) {
+
+					prefix_raiseTimeEvent(&statechart, ticks[i].evid);	// Event -> Ticks.evid => OK
+					MarkAsAttEvent(ticks, NOF_TIMERS, ticks[i].evid);
+				}
+			}
+			#else
+			prefixIface_raise_evTick(&statechart);					// Event -> evTick => OK
+			#endif
+
+			BUTTON_Status = Buttons_GetStatus();
 			if (BUTTON_Status != 0)									// Event -> evTECXOprimodo => OK
 				prefixIface_raise_evTECXOprimido(&statechart, BUTTON_Status);	// Value -> Tecla
 			else													// Event -> evTECXNoOprimido => OK

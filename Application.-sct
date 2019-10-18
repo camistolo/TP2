@@ -102,7 +102,7 @@
         <layoutConstraint xsi:type="notation:Bounds" xmi:id="_xLHAxJF6EeaIxNsxuRXV9Q"/>
       </children>
       <styles xsi:type="notation:ShapeStyle" xmi:id="_xLA6IpF6EeaIxNsxuRXV9Q" fontName="Verdana" fillColor="15790320" lineColor="12632256"/>
-      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_xLA6I5F6EeaIxNsxuRXV9Q" x="250" y="200" width="431" height="272"/>
+      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_xLA6I5F6EeaIxNsxuRXV9Q" x="258" y="360" width="431" height="272"/>
     </children>
     <children xmi:id="_3DHfYUopEee0ZsqKOimupA" type="Region" element="_3DHfo0opEee0ZsqKOimupA">
       <children xsi:type="notation:DecorationNode" xmi:id="_3DHfYkopEee0ZsqKOimupA" type="RegionName">
@@ -190,7 +190,7 @@
         <layoutConstraint xsi:type="notation:Bounds" xmi:id="_3DHfoEopEee0ZsqKOimupA"/>
       </children>
       <styles xsi:type="notation:ShapeStyle" xmi:id="_3DHfoUopEee0ZsqKOimupA" fontName="Verdana" fillColor="15790320" lineColor="12632256"/>
-      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_3DHfokopEee0ZsqKOimupA" x="250" y="-10" width="431" height="211"/>
+      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_3DHfokopEee0ZsqKOimupA" x="258" y="48" width="431" height="259"/>
     </children>
     <children xmi:id="_a65bAUoqEee0ZsqKOimupA" type="Region" element="_a65bU0oqEee0ZsqKOimupA">
       <children xsi:type="notation:DecorationNode" xmi:id="_a65bAkoqEee0ZsqKOimupA" type="RegionName">
