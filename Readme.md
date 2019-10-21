@@ -45,7 +45,7 @@ Las constantes que se definen son:
     1. El LED que se utiliza (en este caso, es el **LED3**)
     2. Los estados del LED (**LED_ON**, **LED_OFF**)
 
-![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_blinky.PNG)
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_blinky.PNG?raw=true)
 
 #### Con Time Events
 
@@ -56,7 +56,7 @@ En el diagrama de estados con **Time Events**, los eventos que cambian de estado
 
 Por esta razón, no se definió ningun evento en el cuadro de la izquierda.
 
-![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_blinkyte.PNG)
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_blinkyte.PNG?raw=true)
 
 ### Código en main.c
 
@@ -64,60 +64,60 @@ Por esta razón, no se definió ningun evento en el cuadro de la izquierda.
 
 En primer lugar, se hacen todas las configuraciones de la placa, de los ticks y de las interrupciones como se vio en el primer TP. Con un **#define** se debe establecer si se usan **Time Events** o no. En el caso de que se utilicen los **Time Events**, se deben inicializar los **Timer Ticks**.
 
-![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_1.PNG)
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_1.PNG?raw=true)
 
 Se realiza primero la inicialización del diagrama a través de la función **prefix_init** que define la estructura de datos de la máquina de estados y que llama a las funciones **prefix_ClearInEvents** y **prefix_ClearOutEvents**
 
-![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_2.PNG)
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_2.PNG?raw=true)
 
 La función **prefix_ClearInEvents** define el evento como inicialmente apagado.
 
-![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_4.PNG)
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_4.PNG?raw=true)
 
 Luego, la función **prefix_enter** setea la secuencia por defecto del programa, que a través de varias funciones que se mostrarán en las siguientes cinco imágenes, se puede ver que define el comienzo del diagrama en el estado **APAGADO**
 
-![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_6.PNG)
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_6.PNG?raw=true)
 
-![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_7.PNG)
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_7.PNG?raw=true)
 
-![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_8.PNG)
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_8.PNG?raw=true)
 
-![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_9.PNG)
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_9.PNG?raw=true)
 
-![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_10.PNG)
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_10.PNG?raw=true)
 
 La función **prefix_enact_main_region_APAGADO** llama a la acción **prefixIface_opLED**, que el programador tuvo que definir y que se observa a continuación, donde se llama a la función **gpioWrite** que establece un estado en el LED que se le indica:
 
-![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_19.PNG)
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_19.PNG?raw=true)
 
 La función principal es un loop que espera a que la interrupción ocurra, al igual que en el TP 1. La diferencia en este caso es si están definidos o no los **Time Events**.
 
-![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_11.PNG)
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_11.PNG?raw=true)
 
     1. Si los **Time Events** no están activados, se llamá a la función **prefixIface_raise_evTick**, que enciende el evento **ev_Tick** como se muestra a continuación:
 
-    ![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_13.PNG)
+    ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_17.PNG?raw=true)
 
     2. Si los **Time Events** están activados, se llamá a las función **UpdateTimers**, que define la estructura de los ticks, mostrada a continuación: 
 
-    ![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_12.PNG)
-    ![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_14.PNG)
+    ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_12.PNG?raw=true)
+    ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_14.PNG?raw=true)
 
     Luego, se llama a la función **IsPendEvent**, donde se chequea si hay algún evento en la cola de eventos, esperando a ocurrir.
 
-    ![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_13.PNG)
+    ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_13.PNG?raw=true)
 
     La función **prefix_raiseTimeEvent** funciona de forma parecida a la función **prefixIface_raise_evTick**, seteando el evento a uno.
 
-    ![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_20.PNG)
+    ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_20.PNG?raw=true)
 
     Por último, mediante la función **MarkAsAttEvent** se determina que el evento ya no se encuentra pendiente.
 
-    ![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_16.PNG)
+    ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_16.PNG?raw=true)
 
 Por último, se llama a la función **prefix_runCycle** que permite la ejecución del ciclo que se creo en el diagrama de estados.
 
-![](C:\Users\camis\Desktop\Camila\Fiuba\SistemasEmbebidos\TP2\Imagenes\1_18.PNG)
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_18.PNG?raw=true)
 
 
 
