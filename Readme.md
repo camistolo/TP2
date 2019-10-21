@@ -96,24 +96,24 @@ La función principal es un loop que espera a que la interrupción ocurra, al ig
 
     1. Si los **Time Events** no están activados, se llamá a la función **prefixIface_raise_evTick**, que enciende el evento **ev_Tick** como se muestra a continuación:
 
-    ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_17.PNG?raw=true)
+   ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_17.PNG?raw=true)
 
     2. Si los **Time Events** están activados, se llamá a las función **UpdateTimers**, que define la estructura de los ticks, mostrada a continuación: 
 
-    ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_12.PNG?raw=true)
-    ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_14.PNG?raw=true)
+   ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_12.PNG?raw=true)
+   ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_14.PNG?raw=true)
 
     Luego, se llama a la función **IsPendEvent**, donde se chequea si hay algún evento en la cola de eventos, esperando a ocurrir.
 
-    ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_13.PNG?raw=true)
+   ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_13.PNG?raw=true)
 
     La función **prefix_raiseTimeEvent** funciona de forma parecida a la función **prefixIface_raise_evTick**, seteando el evento a uno.
 
-    ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_20.PNG?raw=true)
+   ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_20.PNG?raw=true)
 
     Por último, mediante la función **MarkAsAttEvent** se determina que el evento ya no se encuentra pendiente.
 
-    ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_16.PNG?raw=true)
+   ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_16.PNG?raw=true)
 
 Por último, se llama a la función **prefix_runCycle** que permite la ejecución del ciclo que se creo en el diagrama de estados.
 
