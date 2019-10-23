@@ -119,7 +119,69 @@ Por último, se llama a la función **prefix_runCycle** que permite la ejecució
 
 ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_18.PNG?raw=true)
 
+## Generador de Señales
 
+La consigna para el generador de señales era la siguiente:
 
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/gs_0.PNG?raw=true)
 
+Se determinó que para que se observen y controlen los cambios del generador, se iban a realizar las siguientes operaciones:
 
+     → La forma de la señal se controla con la Tecla 1 y cada forma tiene asociado un color del LED RGB diferente:
+        → Triangular: roja
+        → Cuadrada: verde
+        → Senoidal: azul
+    → Cuando el LED1 está encendido, se puede modificar la tensión y cuando está apagado, la frecuencia. Esto se controla con la Tecla 2.
+    → Para aumentar la magnitud correspondiente, se tiene que presionar la Tecla 3 y cada vez que esto se haga, se va a cambiar el LED2.
+    → Para disminuir la magnitud, ocurre lo mismo que cuando se quiere aumentar pero con la Tecla 4 y el LED3.
+    → Para salir de la configuración de cada magnitud (aumento o disminución), se tiene que presionar la Tecla 2.
+
+### Diagrama de estados
+
+Los eventos, acciones, estados y constantes son los establecidos en la consigna, como se puede observar a continuación.
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/gs_4.PNG?raw=true)
+
+Se trabajó con teclas, por lo cual se utilizó el diagrama que lee si alguna tecla fue presionada, como en los ejercicios anteriores.
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/gs_8.PNG?raw=true)
+
+La región principal, espera a que las teclas sean presionadas y si se presiona alguna, hace la acción correspondiente, hasta recibir otra señal de una tecla, como se observa a continuación:
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/gs_6.PNG?raw=true)
+
+En cuanto a la forma, se puede ver en la siguiente región que cada vez que se presione la Tecla 1, como indica la imagen anterior, se va a activar el evento **eForma** que va a entrar al estado de forma de señal correspondiente. En cada estado, se activa la acción **aSetForma**, que recibe una constante cuyo número está asociado con el color de LED de cada forma de señal:
+
+    → cTRIANG: 0
+    → cCUADR: 1
+    → cSENOID: 2
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/gs_5.PNG?raw=true)
+
+La acción se define en el archivo **main.c** de la siguiente manera:
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/gs_1.PNG?raw=true)
+
+Se puede ver que la función recibe el valor del LED que se quiere prender, se enciende, luego se genera un delay y se vuelve a apagar.
+
+En cuanto a la magnitud, se puede observar en la siguiente imagen que cada vez que ingresa al estado **TENSIÓN** o **FORMA**, se llama a la acción **aSetMagn**. 
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/gs_7.PNG?raw=true)
+
+La acción **aSetMagn** se define en el **main.c** de la siguiente forma:
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/gs_2.PNG?raw=true)
+
+Lo que esta acción hace es cambiar el valor del LED, según el valor que recibe. Es decir, según las siguientes constantes, definidas en la máquina de estado:
+
+    → cTENS: true
+    → cFREC: false
+
+la función enciende el LED1 o lo apaga. Así, como se dijo antes, cuando se modifique la tensión, el LED1 va a estar prendido. Y para cambiar el valor de la frecuencia, se tendrá que apagar el LED1.
+
+Para incrementar o disminuir las magnitudes, se utilizaron los eventos **eUp** y **eDown**, correspondientes cada uno a una tecla diferente (Tecla 3 y Tecla 4) y se implementaron las acciones **aIncTens** y **aIncFrec** que son equivalentes, al igual que **aDecTens** y **aDecFrec**.
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/gs_3.PNG?raw=true)
+
+Se puede notar que las acciones que incrementan el valor de la magnitud son iguales y las que lo disminuyen, también. Por esta razón, podría considerarse eliminar las operaciones equivalentes y utilizar una sola función para cada acción, con nombre **aIncMagn** y **aDecMagn**.
+Las acciones que aumentan el valor de la magnitud correspondiente, cambian el estado del LED2 cada vez que la Tecla 3 se presiona. Las operaciones que disminuyen su valor son iguales, sólo que modifican el LED3 cuando la Tecla 4 se presiona.
