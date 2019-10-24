@@ -121,7 +121,27 @@ Por último, se llama a la función **prefix_runCycle** que permite la ejecució
 
 ## Puerta Corrediza
 
+Se implemento el modelo de control de una puerta corrediza automatizada, con movimientos en ambos sentidos, sensor de presencia y finales de carrera.
+Se vana utilizar los siguientes componentes para simular el comprotamiento
 
+     → Tecla 1: Sensor de presensia ON
+     → Tecla 2: Sensor de presensia OFF
+     → Tecla 3: Final de carrera Abierto
+     → Tecla 4: Final de carrera Cerrado
+     → Led 1: Abriendo
+     → Led 2: Cerrando
+
+Cuando se presione el pulsador 1 la puerta comenzará a abrirce hasta que se presione el final de carrera, es decir la tecla 3. Cuando se pulse la tecla 2, la puerta comenzará a cerrarce hasta que se presione el final de carrera Cerrado (tecla 4).
+
+### Diagrama de estados
+
+Los eventos, acciones, estados y constantes que se utilizarón para la implementación fueron los siguientes
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/pc_6.PNG)
+
+En primer lugar se realizó el siguiente diagrama de estados, que es el encargado de describir la lógica principal del programa.
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/pc_4.PNG)
 
 ## Generador de Señales
 
