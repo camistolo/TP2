@@ -143,7 +143,7 @@ En primer lugar se realizó el siguiente diagrama de estados, que es el encargad
 
 ![](https://github.com/camistolo/TP2/blob/master/Imagenes/pc_4.PNG)
 
-Para realizar el sensado de las teclas se utilizo el siguiente diagrama de estados. En este, cuando se produzca el evento evTECXOprimido esperará 50 ms y se realizará la validación comprobando que se produzca ese mismo evento. De ser así se guarda el valor del pulsador para ver que tarea se debe realizar. En caso de que haya detectado incorrectamente que se pulso una tecla, vuelve al estado no oprimido.
+Para realizar el sensado de las teclas se utilizo el siguiente diagrama de estados. En este, cuando se produzca el evento **evTECXOprimido** esperará 50 ms y se realizará la validación comprobando que se produzca ese mismo evento. De ser así se guarda el valor del pulsador para ver que tarea se debe realizar. En caso de que haya detectado incorrectamente que se pulso una tecla, vuelve al estado no oprimido.
 
 ![](https://github.com/camistolo/TP2/blob/master/Imagenes/pc_2.PNG)
 
@@ -153,7 +153,7 @@ Una vez que se obtiene la información sobre que pulsador se presionó, IDLE la 
 
 Luego de producirce cada evento se vuelve a esperar hasta que se presione otro pulsador para generar otro evento.
 
-Para realizar el parpadeo de LEDs se generan eventos siTitilarLEDx, donde el LED x se mantendra apagado 250 ms y 500 ms prendido, hasta que aparezca el evento siNoTitilarLEDx, como se muestra en la siguiente figura.
+Para realizar el parpadeo de LEDs se generan eventos **siTitilarLEDx**, donde el LED x se mantendra apagado 250 ms y 500 ms prendido, hasta que aparezca el evento **siNoTitilarLEDx**, como se muestra en la siguiente figura.
 
 ![](https://github.com/camistolo/TP2/blob/master/Imagenes/pc_5.PNG)
 
@@ -164,8 +164,18 @@ Una vez elegido el programa a ejecutar por medio de la compilación condicional,
 
 ![](https://github.com/camistolo/TP2/blob/master/Imagenes/puerta1.PNG)
 
-Luego, como se observa en la figura siguiente, se realiza la configuración de la placa y la inicialización de variables y estados.
+Luego, como se observa en la figura siguiente, se realiza la configuración de la placa y la inicialización de variables y estados como se explicó anteriormente.
 
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/puerta2.PNG)
+
+Despues se encuentra el loop principal. Este es muy similar al ejercicio anterior ya explicado. La diferencia es que se encuentra el codigo encargado de leer los pulsadores. 
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/puerta3.PNG)
+
+Como se mencionó anteriormente, la función Buttons_GetStatus_ identifica que pulsador se presionó. Esta, a travez de la funcion gpioRead guarda el valor de la tecla correspondiente en la variable BUTTON_Status. Luego si ésta es diferente a cero se activa el evento **evTECXOprimido**, de no ser asi, el evento que se generará será **evTECXNoOprimido**.
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/puerta4.PNG)
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/puerta5.PNG)
 
 ## Generador de Señales
 
