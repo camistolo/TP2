@@ -89,7 +89,7 @@
 
 
 /* Select a compilation choise	*/
-#define TEST (SCT_5)
+#define TEST (SCT_3)
 
 
 #define TICKRATE_1MS	(1)				/* 1000 ticks per second */
