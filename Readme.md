@@ -119,6 +119,10 @@ Por último, se llama a la función **prefix_runCycle** que permite la ejecució
 
 ![](https://github.com/camistolo/TP2/blob/master/Imagenes/1_18.PNG?raw=true)
 
+## Puerta Corrediza
+
+
+
 ## Generador de Señales
 
 La consigna para el generador de señales era la siguiente:
