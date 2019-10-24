@@ -158,6 +158,13 @@ Para realizar el parpadeo de LEDs se generan eventos siTitilarLEDx, donde el LED
 ![](https://github.com/camistolo/TP2/blob/master/Imagenes/pc_5.PNG)
 
 
+### Código de main.c
+
+Una vez elegido el programa a ejecutar por medio de la compilación condicional, vamos a la porción de codigo correspondiente. En primier lugar, se puede observar la función Buttons_GetStatus_ encargada de detectar que tecla fue precionada.
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/puerta1.PNG)
+
+Luego, como se observa en la figura siguiente, se realiza la configuración de la placa y la inicialización de variables y estados.
 
 
 ## Generador de Señales
