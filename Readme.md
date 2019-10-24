@@ -131,7 +131,7 @@ Se vana utilizar los siguientes componentes para simular el comprotamiento
      → Led 1: Abriendo
      → Led 2: Cerrando
 
-Cuando se presione el pulsador 1 la puerta comenzará a abrirce hasta que se presione el final de carrera, es decir la tecla 3. Cuando se pulse la tecla 2, la puerta comenzará a cerrarce hasta que se presione el final de carrera Cerrado (tecla 4).
+Cuando se presione el pulsador 1 la puerta comenzará a abrirce hasta que se presione el final de carrera, es decir la tecla 3. Cuando se pulse la tecla 2, la puerta comenzará a cerrarce hasta que se presione el final de carrera Cerrado (tecla 4). Durante la abertura y cierre de la puerta, el LED 1 y LED 2, respectivamente, parpadearan hasta que lleguen al final del trayecto.
 
 ### Diagrama de estados
 
@@ -151,7 +151,12 @@ Una vez que se obtiene la información sobre que pulsador se presionó, IDLE la 
 
 ![](https://github.com/camistolo/TP2/blob/master/Imagenes/pc_3.PNG)
 
-Luego de producirce cada evento se vuelve a esperar hasta que se presione otro pulsador.
+Luego de producirce cada evento se vuelve a esperar hasta que se presione otro pulsador para generar otro evento.
+
+Para realizar el parpadeo de LEDs se generan eventos siTitilarLEDx, donde el LED x se mantendra apagado 250 ms y 500 ms prendido, hasta que aparezca el evento siNoTitilarLEDx, como se muestra en la siguiente figura.
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/pc_5.PNG)
+
 
 
 
