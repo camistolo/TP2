@@ -243,3 +243,35 @@ Para incrementar o disminuir las magnitudes, se utilizaron los eventos **eUp** y
 
 Se puede notar que las acciones que incrementan el valor de la magnitud son iguales y las que lo disminuyen, también. Por esta razón, podría considerarse eliminar las operaciones equivalentes y utilizar una sola función para cada acción, con nombre **aIncMagn** y **aDecMagn**.
 Las acciones que aumentan el valor de la magnitud correspondiente, cambian el estado del LED2 cada vez que la Tecla 3 se presiona. Las operaciones que disminuyen su valor son iguales, sólo que modifican el LED3 cuando la Tecla 4 se presiona.
+
+## Escaleras mecánicas
+
+Se pasara a documentar el diagrama de estados de la solucion al problema de la escalera mecanica. La consigna es:
+
+"Implementar el modelo de control de escalera mecánica unidireccional automatizada (motor c/movimiento en un sentido y dos velocidades, sensores de ingreso, egreso y señalización luminosa)"
+
+Ademas, se agrego un boton de stop de emergencia.
+
+En primer lugar, se muestra la captura con los eventos, acciones, estados y constantes:
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/Capture1.PNG?raw=true)
+
+Asi como tambien el estado llamado "ESCALERA".
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/Capture2.PNG?raw=true)
+
+En este se puede ver los estados en los que puede estar la misma, velocidad lenta, velocidad rapida que se activa desde que una persona ingresa en la escalera hasta que desciende y un estado de STOP que se activa mediante un boton de emergencia.
+Ademas, los eventos que activan cada estado.
+
+
+Se trabajó con teclas, por lo cual se utilizó el diagrama que lee si alguna tecla fue presionada, como en los ejercicios anteriores.
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/Capture3.PNG?raw=true)
+
+La región principal, espera a que las teclas sean presionadas y si se presiona alguna, hace la acción correspondiente, hasta recibir otra señal de una tecla, como se observa a continuación:
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/Capture4.PNG?raw=true)
+
+Por ultimo, se utilizaron LEDs para poder visualizar el estado de la escalera, por lo que se definieron tres regiones para los tres leds usados.
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/Capture5.PNG?raw=true)
