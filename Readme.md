@@ -143,6 +143,18 @@ En primer lugar se realizó el siguiente diagrama de estados, que es el encargad
 
 ![](https://github.com/camistolo/TP2/blob/master/Imagenes/pc_4.PNG)
 
+Para realizar el sensado de las teclas se utilizo el siguiente diagrama de estados. En este, cuando se produzca el evento evTECXOprimido esperará 50 ms y se realizará la validación comprobando que se produzca ese mismo evento. De ser así se guarda el valor del pulsador para ver que tarea se debe realizar. En caso de que haya detectado incorrectamente que se pulso una tecla, vuelve al estado no oprimido.
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/pc_2.PNG)
+
+Una vez que se obtiene la información sobre que pulsador se presionó, IDLE la procesa. En esta region se espera recibir el dato mencionado anteriormente. Cuando se recibe alguno de estos valores se produce un evento, tal que la lógica principal actue.
+
+![](https://github.com/camistolo/TP2/blob/master/Imagenes/pc_3.PNG)
+
+Luego de producirce cada evento se vuelve a esperar hasta que se presione otro pulsador.
+
+
+
 ## Generador de Señales
 
 La consigna para el generador de señales era la siguiente:
