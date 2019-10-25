@@ -77,7 +77,7 @@
  	 	 	 	 	 	rm prefix.sct
  	 	 	 	 	 	cp Porton.-sct prefix.sct 							 		*/
 
-#define SCT_4 (4)	/* Test Statechart EDU-CIAA-NXP - IDE LPCXpresso - Generador_senales
+#define SCT_4 (4)	/* Test Statechart EDU-CIAA-NXP - IDE LPCXpresso - Puerta Corrediza
 						#define __USE_TIME_EVENTS (false)
  	 	 	 	 	 	rm prefix.sct
  	 	 	 	 	 	cp Generador_senales.-sct prefix.sct 							 		*/
@@ -444,6 +444,11 @@ int main(void)
 			prefixIface_raise_evTick(&statechart);					// Event -> evTick => OK
 			#endif
 
+			BUTTON_Status = Buttons_GetStatus();
+			if (BUTTON_Status != 0)									// Event -> evTECXOprimodo => OK
+				prefixIface_raise_evTECXOprimido(&statechart, BUTTON_Status);	// Value -> Tecla
+			else													// Event -> evTECXNoOprimido => OK
+				prefixIface_raise_evTECXNoOprimido(&statechart);
 
 			prefix_runCycle(&statechart);							// Run Cycle of Statechart
 		}
@@ -451,14 +456,63 @@ int main(void)
 }
 #endif
 
-#if (TEST == SCT_5)	/* Test Statechart EDU-CIAA-NXP - IDE LPCXpresso - Application
+#if (TEST == SCT_5)	/* Test Statechart EDU-CIAA-NXP - IDE LPCXpresso - Generador de Senales
 						#define __USE_TIME_EVENTS (true)
  	 	 	 	 	 	rm prefix.sct
- 	 	 	 	 	 	cp Application.-sct prefix.sct 								*/
-					/* Test Statechart EDU-CIAA-NXP - IDE LPCXpresso - Portón
-						#define __USE_TIME_EVENTS (true)
- 	 	 	 	 	 	rm prefix.sct
- 	 	 	 	 	 	cp Porton.-sct prefix.sct 							 		*/
+ 	 	 	 	 	 	cp Generador.-sct prefix.sct 								*/
+
+
+uint32_t Buttons_GetStatus_(void) {
+	uint8_t ret = false;
+	uint32_t idx;
+
+	for (idx = 0; idx < 4; ++idx) {
+		if (gpioRead( TEC1 + idx ) == 0)
+			ret |= 1 << idx;
+	}
+	return ret;
+}
+
+void prefixIface_aSetForma(Prefix* handle, sc_integer LEDNumber)
+{
+	sc_boolean State_ON = true;
+	sc_boolean State_OFF = false;
+	gpioWrite( (LEDR + LEDNumber), State_ON);
+	delay(1000);
+	gpioWrite( (LEDR + LEDNumber), State_OFF);
+
+}
+
+void prefixIface_aSetMagn(Prefix* handle, sc_boolean LEDState)
+{
+	uint8_t LED1 = 3;
+	gpioWrite( (LEDR + LED1), LEDState);
+
+}
+
+void prefixIface_aIncTens(Prefix* handle)
+{
+	gpioToggle(LED2);
+
+}
+
+void prefixIface_aDecTens(Prefix* handle)
+{
+	gpioToggle(LED3);
+
+}
+
+void prefixIface_aIncFrec(Prefix* handle)
+{
+	gpioToggle(LED2);
+
+}
+
+void prefixIface_aDecFrec(Prefix* handle)
+{
+	gpioToggle(LED3);
+
+}
 
 /**
  * @brief	main routine for statechart example
@@ -473,7 +527,13 @@ int main(void)
 	uint32_t BUTTON_Status;
 
 	/* Generic Initialization */
-	initHardware();
+	boardConfig();
+
+	/* Init Ticks counter => TICKRATE_MS */
+	tickConfig( TICKRATE_MS );
+
+	/* Add Tick Hook */
+	tickCallbackSet( myTickHook, (void*)NULL );
 
 	/* Statechart Initialization */
 	#if (__USE_TIME_EVENTS == true)
@@ -499,11 +559,11 @@ int main(void)
 					MarkAsAttEvent(ticks, NOF_TIMERS, ticks[i].evid);
 				}
 			}
-			#else
-			prefixIface_raise_evTick(&statechart);					// Event -> evTick => OK
+			//#else
+			//prefixIface_raise_evTick(&statechart);					// Event -> evTick => OK
 			#endif
 
-			BUTTON_Status = Buttons_GetStatus();
+			BUTTON_Status = Buttons_GetStatus_();
 			if (BUTTON_Status != 0)									// Event -> evTECXOprimodo => OK
 				prefixIface_raise_evTECXOprimido(&statechart, BUTTON_Status);	// Value -> Tecla
 			else													// Event -> evTECXNoOprimido => OK
